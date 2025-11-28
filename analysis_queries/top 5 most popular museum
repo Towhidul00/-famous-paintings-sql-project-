@@ -1,0 +1,15 @@
+SELECT
+  m.museum_id,
+  m.name AS museum_name,
+  m.city,
+  COUNT(w.work_id) AS total_paintings   
+FROM `painting-475604.famous_painting.work_cleaned`   AS w
+JOIN `painting-475604.famous_painting.museum_cleaned` AS m
+  ON w.museum_id = m.museum_id         
+GROUP BY
+  m.museum_id,
+  m.name,
+  m.city
+ORDER BY
+  total_paintings DESC                 
+LIMIT 5;                          
