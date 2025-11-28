@@ -1,0 +1,12 @@
+SELECT country, total_paintings
+FROM (
+  SELECT
+    m.country,
+    COUNT(w.work_id) AS total_paintings,
+    ROW_NUMBER() OVER (ORDER BY COUNT(w.work_id) DESC) AS rn
+  FROM `painting-475604.famous_painting.work_cleaned` AS w
+  JOIN `painting-475604.famous_painting.museum_cleaned` AS m
+    ON w.museum_id = m.museum_id
+  GROUP BY m.country
+)
+WHERE rn = 5;  
