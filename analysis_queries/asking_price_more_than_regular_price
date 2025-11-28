@@ -1,0 +1,3 @@
+SELECT COUNT(*) AS total_overpriced
+FROM `painting-475604.famous_painting.product_size_cleaned`
+WHERE sale_price > regular_price;
