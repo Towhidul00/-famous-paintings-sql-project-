@@ -1,0 +1,55 @@
+WITH priced AS (
+  SELECT
+    p.work_id,
+    p.size_id,
+    p.sale_price,
+    w.name        AS painting_name,
+    a.full_name   AS artist_name,
+    m.name        AS museum_name,
+    m.city        AS museum_city,
+    c.label       AS canvas_label
+  FROM `painting-475604.famous_painting.product_size_cleaned` AS p
+  JOIN `painting-475604.famous_painting.work_cleaned`   AS w
+    ON p.work_id = w.work_id
+  JOIN `painting-475604.famous_painting.artist_cleaned` AS a
+    ON w.artist_id = a.artist_id
+  JOIN `painting-475604.famous_painting.museum_cleaned` AS m
+    ON w.museum_id = m.museum_id
+  JOIN `painting-475604.famous_painting.canvas_size_cleaned` AS c
+    ON SAFE_CAST(p.size_id AS INT64) = c.size_id
+  WHERE p.sale_price IS NOT NULL
+)
+
+-- MOST EXPENSIVE
+SELECT *
+FROM (
+  SELECT
+    'most_expensive' AS price_type,
+    artist_name,
+    sale_price,
+    painting_name,
+    museum_name,
+    museum_city,
+    canvas_label
+  FROM priced
+  ORDER BY sale_price DESC
+  LIMIT 1
+)
+
+UNION ALL
+
+-- LEAST EXPENSIVE
+SELECT *
+FROM (
+  SELECT
+    'least_expensive' AS price_type,
+    artist_name,
+    sale_price,
+    painting_name,
+    museum_name,
+    museum_city,
+    canvas_label
+  FROM priced
+  ORDER BY sale_price ASC
+  LIMIT 1
+);
