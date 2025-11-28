@@ -1,0 +1,12 @@
+SELECT
+  m.museum_id,
+  m.name AS museum_name,
+  m.city
+FROM `painting-475604.famous_painting.museum_cleaned` AS m
+JOIN `painting-475604.famous_painting.museum_hours_cleaned` AS h
+  ON m.museum_id = h.museum_id
+WHERE h.day IN ('Sunday', 'Monday')       
+  AND h.open IS NOT NULL                 
+  AND h.open != 'closed'
+GROUP BY m.museum_id, m.name, m.city
+HAVING COUNT(DISTINCT h.day) = 2;        
