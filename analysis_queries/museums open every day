@@ -1,0 +1,9 @@
+SELECT COUNT(*) AS museums_open_every_day
+FROM (
+  SELECT
+    museum_id
+  FROM `painting-475604.famous_painting.museum_hours_cleaned`
+  WHERE open != 'closed'       
+  GROUP BY museum_id
+  HAVING COUNT(DISTINCT day) = 7  
+);
