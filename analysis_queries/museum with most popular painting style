@@ -1,0 +1,24 @@
+WITH popular AS (
+  SELECT
+    style
+  FROM `painting-475604.famous_painting.work_cleaned`
+  GROUP BY style
+  ORDER BY COUNT(*) DESC
+  LIMIT 1              
+)
+
+SELECT
+  m.name AS museum_name,
+  m.state,
+  m.city,
+  COUNT(w.work_id) AS total_paintings_in_popular_style
+FROM `painting-475604.famous_painting.work_cleaned` AS w
+JOIN popular AS p
+  ON w.style = p.style               
+JOIN `painting-475604.famous_painting.museum_cleaned` AS m
+  ON w.museum_id = m.museum_id       
+GROUP BY
+  m.name, m.state, m.city
+ORDER BY
+  total_paintings_in_popular_style DESC
+LIMIT 1;                              
