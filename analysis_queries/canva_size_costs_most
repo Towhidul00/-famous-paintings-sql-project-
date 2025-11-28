@@ -1,0 +1,13 @@
+SELECT
+  c.size_id,
+  c.label AS canvas_label,
+  c.height,
+  c.width,
+  ROUND(AVG(p.sale_price), 2) AS avg_sale_price
+FROM `painting-475604.famous_painting.product_size_cleaned` AS p
+JOIN `painting-475604.famous_painting.canvas_size_cleaned`  AS c
+  ON SAFE_CAST(p.size_id AS INT64) = c.size_id   -- <<< fix: cast STRING -> INT64
+WHERE p.sale_price IS NOT NULL
+GROUP BY c.size_id, c.label, c.height, c.width
+ORDER BY avg_sale_price DESC
+LIMIT 1;
