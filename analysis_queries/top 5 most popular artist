@@ -1,0 +1,13 @@
+SELECT
+ 
+  a.full_name AS artist_name,
+  COUNT(w.work_id) AS total_paintings
+FROM `painting-475604.famous_painting.work_cleaned` AS w
+JOIN `painting-475604.famous_painting.artist_cleaned` AS a
+  ON w.artist_id = a.artist_id
+GROUP BY
+  a.artist_id,
+  a.full_name
+ORDER BY
+  total_paintings DESC
+LIMIT 5;
