@@ -1,0 +1,9 @@
+SELECT
+  m.museum_id,
+  m.name AS museum_name,
+  m.city,
+  m.country
+FROM `painting-475604.famous_painting.museum_cleaned` AS m
+LEFT JOIN `painting-475604.famous_painting.work_cleaned` AS w
+  ON m.museum_id = w.museum_id
+WHERE w.work_id IS NULL;
