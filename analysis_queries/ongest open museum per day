@@ -1,0 +1,32 @@
+WITH durations AS (
+  SELECT
+    h.museum_id,
+    h.day,
+    -- convert '10.00' → '10:00' → TIME
+    SAFE.PARSE_TIME('%H:%M', REPLACE(TRIM(h.open),  '.', ':'))  AS open_time,
+    SAFE.PARSE_TIME('%H:%M', REPLACE(TRIM(h.close), '.', ':')) AS close_time
+  FROM `painting-475604.famous_painting.museum_hours_cleaned` AS h
+  WHERE h.open IS NOT NULL
+    AND h.close IS NOT NULL
+),
+
+hours_per_day AS (
+  SELECT
+    museum_id,
+    day,
+    TIME_DIFF(close_time, open_time, MINUTE) / 60.0 AS hours_open
+  FROM durations
+  WHERE open_time IS NOT NULL
+    AND close_time IS NOT NULL
+)
+
+SELECT
+  m.name AS museum_name,
+  m.state,
+  h.day,
+  ROUND(h.hours_open, 2) AS hours_open
+FROM hours_per_day AS h
+JOIN `painting-475604.famous_painting.museum_cleaned` AS m
+  ON h.museum_id = m.museum_id
+ORDER BY h.hours_open DESC
+LIMIT 1;
