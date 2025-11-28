@@ -1,0 +1,18 @@
+SELECT
+  a.full_name AS artist_name,
+  a.nationality,
+  COUNT(*) AS total_portrait_paintings
+FROM `painting-475604.famous_painting.subject_cleaned` AS s
+JOIN `painting-475604.famous_painting.work_cleaned` AS w
+  ON s.work_id = w.work_id
+JOIN `painting-475604.famous_painting.museum_cleaned` AS m
+  ON w.museum_id = m.museum_id
+JOIN `painting-475604.famous_painting.artist_cleaned` AS a
+  ON w.artist_id = a.artist_id
+WHERE LOWER(s.subject) = 'portrait'     
+GROUP BY
+  a.full_name,
+  a.nationality
+ORDER BY
+  total_portrait_paintings DESC
+LIMIT 1;                                 
