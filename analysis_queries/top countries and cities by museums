@@ -1,0 +1,40 @@
+WITH country_count AS (
+  SELECT
+    country,
+    COUNT(*) AS total_museums
+  FROM `painting-475604.famous_painting.museum_cleaned`
+  GROUP BY country
+),
+
+max_country AS (
+  SELECT MAX(total_museums) AS max_museums
+  FROM country_count
+),
+
+city_count AS (
+  SELECT
+    city,
+    COUNT(*) AS total_museums
+  FROM `painting-475604.famous_painting.museum_cleaned`
+  GROUP BY city
+),
+
+max_city AS (
+  SELECT MAX(total_museums) AS max_museums
+  FROM city_count
+)
+
+SELECT
+ 
+  (
+    SELECT STRING_AGG(country, ', ')
+    FROM country_count
+    WHERE total_museums = (SELECT max_museums FROM max_country)
+  ) AS top_countries,
+
+
+  (
+    SELECT STRING_AGG(city, ', ')
+    FROM city_count
+    WHERE total_museums = (SELECT max_museums FROM max_city)
+  ) AS top_cities;
