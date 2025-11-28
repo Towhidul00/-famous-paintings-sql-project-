@@ -1,0 +1,31 @@
+WITH style_counts AS (
+  SELECT
+    style,
+    COUNT(*) AS total_paintings
+  FROM `painting-475604.famous_painting.work_cleaned`
+  GROUP BY style
+)
+
+-- 3 MOST popular styles
+SELECT * FROM (
+  SELECT
+    'most_popular' AS category,
+    style,
+    total_paintings
+  FROM style_counts
+  ORDER BY total_paintings DESC
+  LIMIT 3
+)
+
+UNION ALL
+
+--  3 LEAST popular styles
+SELECT * FROM (
+  SELECT
+    'least_popular' AS category,
+    style,
+    total_paintings
+  FROM style_counts
+  ORDER BY total_paintings ASC
+  LIMIT 3
+);
