@@ -1,0 +1,7 @@
+SELECT
+  subject,                
+  COUNT(*) AS total_paintings  
+FROM `painting-475604.famous_painting.subject_cleaned`
+GROUP BY subject                 
+ORDER BY total_paintings DESC   
+LIMIT 10;                    
