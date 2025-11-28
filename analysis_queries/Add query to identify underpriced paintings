@@ -1,0 +1,13 @@
+SELECT
+  w.work_id,
+  w.name AS painting_name,
+  p.sale_price,
+  p.regular_price,
+  ROUND((p.sale_price / p.regular_price) * 100, 1) AS percent_of_regular
+FROM `painting-475604.famous_painting.product_size_cleaned` AS p
+JOIN `painting-475604.famous_painting.work_cleaned` AS w
+  ON p.work_id = w.work_id
+WHERE p.sale_price IS NOT NULL
+  AND p.regular_price IS NOT NULL
+  AND p.sale_price < (0.5 * p.regular_price)
+ORDER BY percent_of_regular ASC;
