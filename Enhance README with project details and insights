@@ -1,0 +1,107 @@
+# -famous-paintings-sql-project-
+Complete Data Cleaning, Standardisation, ERD Design & Analysis using BigQuery
+
+#  Overview  
+This project demonstrates a **full end-to-end SQL workflow** on a Famous Paintings dataset using **Google BigQuery**.
+
+It includes:
+- Data Cleaning  
+- Data Standardisation  
+- Data Validation  
+- Relationship Modelling  
+- Entity–Relationship Diagram (ERD)  
+- Advanced SQL Analytical Insights  
+- GitHub Project Documentation  
+
+**Author:** Towhidul  
+
+# Structure
+
+famous-paintings-sql-project/
+│
+├── cleaning_queries/ # All cleaned table SQL scripts
+├── analysis_queries/ # All analysis SQL scripts
+├── ERD_clean_version.png
+└── README.md # Project documentation
+
+
+Cleaned tables include:
+
+| Table Name                 | Purpose |
+|----------------------------|---------|
+| artist_cleaned            | Clean artist details, names, nationality |
+| work_cleaned              | Artwork info, artist and museum link |
+| museum_cleaned            | Normalised museum details, city/state/postal cleaning |
+| museum_hours_cleaned      | Standardised opening hours |
+| canvas_size_cleaned       | Standardised canvas dimensions |
+| product_size_cleaned      | Prices linked to specific canvas sizes |
+| image_link_cleaned        | Cleaned image URLs |
+| subject_cleaned           | Cleaned painting subjects |
+
+# Key Cleaning Techniques:
+- Trim spaces (`TRIM`)
+- Name formatting (`INITCAP`)
+- Standardising casing (`LOWER`)
+- Removing invalid numbers (`SAFE_CAST`)
+- Removing duplicates (`ROW_NUMBER`)
+- Normalising time formats
+- Fixing city/state/postal inconsistencies
+- Ensuring foreign key consistency
+- Removing corrupted rows (like `#VALUE!`)
+
+
+
+# Entity–Relationship Diagram (ERD)
+
+This diagram shows the full relational database structure with all columns, PKs, and FKs.
+
+
+
+# Analysis Questions & Insights
+
+All analysis SQL files are in:
+
+
+Some questions answered:
+
+# Artwork & Museum Insights
+- Paintings not displayed in any museum  
+- Museums without any paintings  
+- Museums open every single day  
+- Museum with longest opening hours  
+- Country with 5th highest number of paintings  
+
+# Artist Insights
+- Top 5 most popular artists  
+- Artists with paintings in multiple countries  
+- Artist with most Portrait paintings outside USA  
+
+# Painting Insights
+- Top 10 most popular subjects  
+- Most expensive & least expensive painting  
+- Paintings priced above regular price  
+- Paintings priced below 50% of regular price  
+
+# Canvas & Product Insights
+- Most expensive canvas size  
+- 3 least popular canvas sizes  
+- Styles with highest popularity  
+- Museums with most popular painting style  
+
+
+# How to Run the Project
+
+1. Open **Google BigQuery**
+2. Run all SQL files in `cleaning_queries/` to generate cleaned tables.
+3. Run any SQL file in `analysis_queries/` to get insights.
+4. View the ERD to understand the relationships.
+
+
+# 🛠 Tools Used
+
+
+- **Google BigQuery**
+- **GitHub**
+
+
+
